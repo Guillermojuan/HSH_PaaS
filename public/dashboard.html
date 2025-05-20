@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Sweet Home - Dashboard Empleados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">HSH Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#branches">Sucursales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feedback">Quejas y Sugerencias</a>
+                    </li>
+                </ul>
+                <div class="navbar-text text-light me-3">
+                    Bienvenido, <span id="userName"></span>
+                </div>
+                <button class="btn btn-outline-light" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Dashboard Section -->
+        <section id="dashboard">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Productos</h5>
+                            <p class="card-text" id="totalProducts">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Productos con Bajo Stock</h5>
+                            <p class="card-text" id="lowStockProducts">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Valor Total</h5>
+                            <p class="card-text" id="totalValue">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Sucursales</h5>
+                            <p class="card-text" id="totalBranches">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Ventas por Sucursal</h5>
+                            <canvas id="salesByBranchChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Top Productos</h5>
+                            <canvas id="topProductsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Rendimiento de Ventas</h5>
+                            <canvas id="salesPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="mt-5 d-none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Productos</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Sucursal</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Branches Section -->
+        <section id="branches" class="mt-5 d-none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sucursales</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Ubicación</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Horario</th>
+                                </tr>
+                            </thead>
+                            <tbody id="branchesTableBody">
+                                <!-- Branches will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section id="feedback" class="mt-5 d-none">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quejas y Sugerencias</h5>
+                    <div id="feedbackList" class="feedback-list">
+                        <!-- Feedback items will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Verificar autenticación
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (!token || user.role !== 'employee') {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = user.username;
+        }
+
+        // Cerrar sesión
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login.html';
+        }
+
+        // Navegación
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.add('d-none');
+                });
+                
+                // Mostrar la sección seleccionada
+                document.getElementById(targetId).classList.remove('d-none');
+                
+                // Actualizar navegación
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            });
+        });
+
+        // API endpoints
+        const API_ENDPOINTS = {
+            salesByBranch: '/api/dashboard/sales-by-branch',
+            topProducts: '/api/dashboard/top-products',
+            salesPerformance: '/api/dashboard/sales-performance',
+            inventorySummary: '/api/dashboard/inventory-summary',
+            feedback: '/api/feedback',
+            branches: '/api/branches',
+            products: '/api/products'
+        };
+
+        // Fetch data from API
+        async function fetchData(endpoint) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (!response.ok) throw new Error('Network response was not ok');
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null;
+            }
+        }
+
+        // Update inventory summary
+        function updateInventorySummary(data) {
+            if (!data) return;
+            
+            document.getElementById('totalProducts').textContent = data.totalProducts || 0;
+            document.getElementById('lowStockProducts').textContent = data.lowStockProducts || 0;
+            document.getElementById('totalValue').textContent = `$${(data.totalValue || 0).toLocaleString()}`;
+            document.getElementById('totalBranches').textContent = data.totalBranches || 0;
+        }
+
+        // Create sales by branch chart
+        function createSalesByBranchChart(data) {
+            const ctx = document.getElementById('salesByBranchChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(item => item.branchName),
+                    datasets: [{
+                        label: 'Ventas por Sucursal',
+                        data: data.map(item => item.totalSales),
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => `$${value.toLocaleString()}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create top products chart
+        function createTopProductsChart(data) {
+            const ctx = document.getElementById('topProductsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.map(item => item.productName),
+                    datasets: [{
+                        data: data.map(item => item.totalSold),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+
+        // Create sales performance chart
+        function createSalesPerformanceChart(data) {
+            const ctx = document.getElementById('salesPerformanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(item => new Date(item.date).toLocaleDateString()),
+                    datasets: [{
+                        label: 'Ventas Diarias',
+                        data: data.map(item => item.totalSales),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => `$${value.toLocaleString()}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load products
+        async function loadProducts() {
+            const products = await fetchData(API_ENDPOINTS.products);
+            if (!products) return;
+
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>$${product.price.toLocaleString()}</td>
+                    <td>${product.stock}</td>
+                    <td>${product.branchName}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="editProduct(${product.id})">Editar</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Load branches
+        async function loadBranches() {
+            const branches = await fetchData(API_ENDPOINTS.branches);
+            if (!branches) return;
+
+            const tbody = document.getElementById('branchesTableBody');
+            tbody.innerHTML = branches.map(branch => `
+                <tr>
+                    <td>${branch.id}</td>
+                    <td>${branch.name}</td>
+                    <td>${branch.location}</td>
+                    <td>${branch.phone}</td>
+                    <td>${branch.email}</td>
+                    <td>${branch.opening_hours}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Load feedback
+        async function loadFeedback() {
+            const feedback = await fetchData(API_ENDPOINTS.feedback);
+            if (!feedback) return;
+
+            const feedbackList = document.getElementById('feedbackList');
+            feedbackList.innerHTML = feedback.map(item => `
+                <div class="feedback-item">
+                    <div class="name">${item.name}</div>
+                    <div class="email">${item.email}</div>
+                    <div class="message">${item.message}</div>
+                    ${item.branchName ? `<div class="branch">Sucursal: ${item.branchName}</div>` : ''}
+                    <div class="date">${new Date(item.created_at).toLocaleString()}</div>
+                    <div class="status">Estado: ${item.status}</div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize dashboard
+        async function initializeDashboard() {
+            checkAuth();
+
+            // Fetch and update all dashboard data
+            const [salesByBranch, topProducts, salesPerformance, inventorySummary] = await Promise.all([
+                fetchData(API_ENDPOINTS.salesByBranch),
+                fetchData(API_ENDPOINTS.topProducts),
+                fetchData(API_ENDPOINTS.salesPerformance),
+                fetchData(API_ENDPOINTS.inventorySummary)
+            ]);
+
+            // Update UI with fetched data
+            if (salesByBranch) createSalesByBranchChart(salesByBranch);
+            if (topProducts) createTopProductsChart(topProducts);
+            if (salesPerformance) createSalesPerformanceChart(salesPerformance);
+            if (inventorySummary) updateInventorySummary(inventorySummary);
+
+            // Load other sections
+            loadProducts();
+            loadBranches();
+            loadFeedback();
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeDashboard);
+    </script>
+</body>
+</html> 

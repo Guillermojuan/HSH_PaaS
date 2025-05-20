@@ -1,0 +1,167 @@
+body {
+    font-family: 'Lora', serif;
+    background: #f7f3ef url('/images/wood-bg.jpg') repeat;
+    background-size: 400px 400px;
+    background-repeat: repeat;
+    color: #5a3a1b;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #a9744f 0%, #d7b899 100%) !important;
+    box-shadow: 0 2px 8px #a9744f22;
+}
+
+.navbar-brand span {
+    color: #5a3a1b !important;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link {
+    color: #fff8f1 !important;
+    font-weight: 500;
+    margin-right: 8px;
+    transition: color 0.2s;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+    color: #ffe5c2 !important;
+    text-shadow: 0 1px 4px #a9744f55;
+}
+
+.img-fluid.rounded.shadow {
+    border: 4px solid #e0c9a6;
+    box-shadow: 0 8px 32px #a9744f33;
+    background: #fff8f1;
+}
+
+.card {
+    background: #fff8f1;
+    border: 1px solid #e0c9a6;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #a9744f22;
+}
+
+.card-title, h2 {
+    color: #a9744f;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.card-body {
+    padding: 2rem 1.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #a9744f 0%, #d7b899 100%);
+    border: none;
+    color: #fff8f1;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #a9744f33;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #7c5432 0%, #bfa074 100%);
+    color: #fff8f1;
+    box-shadow: 0 4px 16px #a9744f55;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #e0c9a6;
+    background: #fff;
+    color: #5a3a1b;
+    box-shadow: none;
+    transition: border 0.2s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #a9744f;
+    box-shadow: 0 0 0 2px #ffe5c2aa;
+}
+
+.text-muted.text-center {
+    color: #a9744f !important;
+    font-size: 1.1rem;
+    font-style: italic;
+    background: #fff8f1;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px #a9744f22;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    .img-fluid.rounded.shadow {
+        max-width: 90vw;
+    }
+}
+
+::selection {
+    background: #ffe5c2;
+    color: #5a3a1b;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(247, 243, 239, 0.7);
+    pointer-events: none;
+}
+
+.feedback-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.feedback-item {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #a9744f22;
+    padding: 1.2rem 1.5rem;
+    border-left: 6px solid #a9744f;
+    transition: box-shadow 0.2s;
+}
+
+.feedback-item:hover {
+    box-shadow: 0 4px 16px #a9744f44;
+}
+
+.feedback-item .name {
+    font-weight: bold;
+    color: #a9744f;
+    font-size: 1.1rem;
+}
+
+.feedback-item .email {
+    color: #7c5432;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+.feedback-item .message {
+    margin: 0.7rem 0;
+    font-size: 1.05rem;
+}
+
+.feedback-item .branch,
+.feedback-item .date,
+.feedback-item .status {
+    font-size: 0.93rem;
+    color: #5a3a1b;
+    margin-bottom: 0.2rem;
+}
+
+.feedback-item .status {
+    font-style: italic;
+    color: #bfa074;
+}
